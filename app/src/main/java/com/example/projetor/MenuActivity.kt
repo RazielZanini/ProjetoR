@@ -1,15 +1,13 @@
 package com.example.projetor
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import com.example.projetor.models.Player
+import androidx.appcompat.app.AppCompatActivity
 
-
-class MainActivity : ComponentActivity() {
+class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
+        
     }
 }

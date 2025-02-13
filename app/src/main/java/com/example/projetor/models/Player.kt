@@ -6,7 +6,6 @@ class Player(val name: String){
     private var hp: Int = 50
     private var xp: Int = 0
     private var atk: Int = 10
-    private var def: Int = 5
     private var lvl: Int = 1
     private var gold: Int = 0
     private val inventory = mutableListOf<Item>()
@@ -29,12 +28,21 @@ class Player(val name: String){
     fun attackEnemy(enemy: Monster){
         val dice1 = Random.nextInt(1,6)
         val dice2 = Random.nextInt(1,6)
+
+        atk += dice1 + dice2
+
+        if(atk > enemy.atk){
+            enemy.hp -= atk
+        } else if(atk < enemy.atk){
+            hp -= enemy.atk
+        } else {
+            return
+        }
     }
 
     fun addItemStatus(item: Item){
         hp += item.extraHp
         atk += item.atk
-        def += item.def
     }
 
     fun gainGold(receivedGold: Int){

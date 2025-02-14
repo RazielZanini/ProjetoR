@@ -5,6 +5,69 @@
     android:id="@+id/menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuActivity">
+    tools:context=".MenuActivity"
+    android:background="@color/background"
+    >
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:id="@+id/logo"
+        android:src="@drawable/projeto_r_logo"
+        android:contentDescription="Logo do projeto"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/rounded_button"
+        android:backgroundTint="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="75dp"
+        android:id="@+id/new_game"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/rounded_button"
+        android:text="Novo Jogo"
+        android:textColor="#0E151B"
+        android:textSize="50px"
+        android:textFontWeight="700"
+        />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="75dp"
+        android:id="@+id/load_game"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/new_game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/rounded_button"
+        android:text="CARREGAR JOGO"
+        android:textColor="#0E151B"
+        android:textSize="50px"
+        android:textFontWeight="700"
+        />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="75dp"
+        android:id="@+id/info"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/load_game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/rounded_button"
+        android:text="Informação"
+        android:textColor="#0E151B"
+        android:textSize="50px"
+        android:textFontWeight="700"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

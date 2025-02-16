@@ -7,9 +7,7 @@ import kotlin.random.Random
 
 class PlayerController(private val player: Player) {
 
-    fun attackEnemy(enemy: Monster){
-        val dice1 = Random.nextInt(1,6)
-        val dice2 = Random.nextInt(1,6)
+    fun attackEnemy(enemy: Monster, dice1: Int, dice2: Int){
         val totalAtk = player.atk + dice1 + dice2
 
         if(player.atk > enemy.atk){
@@ -18,12 +16,4 @@ class PlayerController(private val player: Player) {
             player.takeDamage(enemy.atk)
         }
     }
-
-    fun equipItem(item: Item, itemIndex: Int){
-        player.equipedItems[itemIndex]?.let { player.removeItemStatus(it) }
-        player.equipedItems[itemIndex] = item
-        player.addItemStatus(item)
-    }
-
-
 }

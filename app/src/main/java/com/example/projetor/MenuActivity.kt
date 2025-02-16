@@ -5,12 +5,10 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.AlertDialog
 import com.example.projetor.databinding.ActivityMenuBinding
-import com.example.projetor.models.Player
+import androidx.compose.material3.AlertDialog
 
 class MenuActivity : AppCompatActivity() {
 
@@ -54,8 +52,6 @@ class MenuActivity : AppCompatActivity() {
                 startActivity(intent)
 
                 dialog.dismiss()
-
-                onDestroy()
             }
             .setNegativeButton("Cancelar") {dialog, _ ->
                 dialog.dismiss()

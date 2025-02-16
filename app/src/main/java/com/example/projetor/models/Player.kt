@@ -1,6 +1,6 @@
 package com.example.projetor.models
 
-class Player(val name: String){
+class Player(val name: String, imgId: Int){
     var hp: Int = 50
         private set
     var xp: Int = 0
@@ -11,8 +11,7 @@ class Player(val name: String){
         private set
     var gold: Int = 0
         private set
-    val inventory = mutableListOf<Item>()
-    val equipedItems: MutableList<Item?> = MutableList(2) {null}
+    val potions = mutableListOf<Item>()
 
     fun gainXp(earnedXp: Int) {
         xp += earnedXp
@@ -29,21 +28,12 @@ class Player(val name: String){
         if(hp < 0) hp = 0
     }
 
-    fun addItemToInventory(item: Item){
-        inventory.add(item)
-    }
-
-    fun addItemStatus(item: Item){
-        hp += item.extraHp
-        atk += item.atk
-    }
-
     fun gainGold(receivedGold: Int){
         gold += receivedGold
     }
 
-    fun removeItemStatus(item: Item){
-        hp -= item.extraHp
-        atk -= item.atk
+    fun addItem(potion: Item){
+        potions.add(potion)
     }
+
 }

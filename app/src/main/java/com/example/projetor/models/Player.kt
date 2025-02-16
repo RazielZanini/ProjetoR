@@ -11,16 +11,27 @@ class Player(val name: String, imgId: Int){
         private set
     var gold: Int = 0
         private set
-    val potions = mutableListOf<Item>()
+    val potions = mutableListOf<Item>(
+        Item("Poção de vida", 10),
+        Item("Poção de vida", 10)
+    )
+
+    //gap de xp gerados automaticamente
+    val xpGap = generateSequence(0) { it + 5 }.take(10).toList()
 
     fun gainXp(earnedXp: Int) {
         xp += earnedXp
 
-        if(xp >= 15){
-            val excess = xp - 15 //armazena o excesso de xp
-            xp = excess // reseta o xp e deixa o restante da progressão
-            lvl++
+        if(xp >= xpGap[lvl]){
+            levelUp()
         }
+    }
+
+    private fun levelUp(){
+        val excess = xp - xpGap[lvl] //armazena o excesso de xp
+        xp = excess // reseta o xp e deixa o restante da progressão
+        lvl++
+        atk+=2
     }
 
     fun takeDamage(damage: Int) {
@@ -32,8 +43,14 @@ class Player(val name: String, imgId: Int){
         gold += receivedGold
     }
 
-    fun addItem(potion: Item){
-        potions.add(potion)
+    fun usePotion(potion: Item){
+        if(hp + potion.lifeRegen > 50){
+            hp = 50
+            potions.remove(potion)
+        } else{
+            hp += potion.lifeRegen
+            potions.remove(potion)
+        }
     }
 
 }

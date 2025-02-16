@@ -1,5 +1,5 @@
 package com.example.projetor.models
 
-class Item(){
+class Item(val name: String, val lifeRegen: Int){
 
 }

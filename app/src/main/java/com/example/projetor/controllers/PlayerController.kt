@@ -1,19 +1,42 @@
 package com.example.projetor.controllers
 
+import android.content.Context
+import android.widget.Toast
 import com.example.projetor.models.Item
 import com.example.projetor.models.Monster
 import com.example.projetor.models.Player
-import kotlin.random.Random
 
-class PlayerController(private val player: Player) {
+class PlayerController(private val context: Context, private val player: Player) {
 
     fun attackEnemy(enemy: Monster, dice1: Int, dice2: Int){
         val totalAtk = player.atk + dice1 + dice2
 
-        if(player.atk > enemy.atk){
+        if(totalAtk > enemy.atk){
             enemy.takeDamage(totalAtk)
-        } else if(player.atk < enemy.atk){
-            player.takeDamage(enemy.atk)
+            Toast.makeText(context, "Inimigo sofreu $totalAtk de dano", Toast.LENGTH_SHORT).show()
+        } else if(totalAtk < enemy.atk){
+            player.takeDamage(enemy.atk - totalAtk)
+            Toast.makeText(context, "Jogador sofreu ${enemy.atk - totalAtk} de dano", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Empate",Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun earnBattleXp(monster: Monster){
+        val gainedXp = monster.lvl * 3
+
+        player.gainXp(gainedXp)
+
+        Toast.makeText(context, "Jogador recebeu $gainedXp de experiência", Toast.LENGTH_SHORT).show()
+    }
+
+    fun usePotion(potion: Item){
+
+        if(player.hp == 50){
+            Toast.makeText(context, "Sua vida já está cheia", Toast.LENGTH_SHORT).show()
+        } else {
+            player.usePotion(potion)
+        }
+
     }
 }

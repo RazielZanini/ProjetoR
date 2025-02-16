@@ -15,6 +15,6 @@ class Monster(val name:String, val imageResId: Int){
     fun adjustStatus(player: Player){
         lvl = player.lvl //o nivel do monstro será escalado conforme o nivel do jogador
         atk = player.atk + 5 // o ataque do monstro será sempre 5 pontos a mais do ataque do jogador
-        hp += lvl * 5 //a vida do monstro escala de acordo com seu nível
+        hp = if(player.lvl > 1)hp + (player.lvl * 5) else 50 //a vida do monstro escala de acordo com seu nível
     }
 }

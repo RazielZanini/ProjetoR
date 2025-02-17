@@ -35,7 +35,7 @@ class PlayerController(private val context: Context, private val player: Player)
     //função para beber poção
     fun usePotion(potion: Item){
 
-        if(player.hp == 50){
+        if(player.hp == player.hpGap[player.lvl]){
             Toast.makeText(context, "Sua vida já está cheia", Toast.LENGTH_SHORT).show()
         } else {
             player.usePotion(potion)

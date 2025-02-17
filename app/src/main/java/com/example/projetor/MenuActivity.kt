@@ -39,7 +39,6 @@ class MenuActivity : AppCompatActivity() {
             loadGameButton.isEnabled = false
         } else {
             loadGameButton.setOnClickListener{
-                Toast.makeText(this, "Botão clicado",Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("LOAD_GAME", true)
                 startActivity(intent)

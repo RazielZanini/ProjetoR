@@ -67,6 +67,7 @@ class MainActivity : ComponentActivity() {
 
         updateEnemyData(monster)
 
+        //Evento ao clicar no botão de batalha
         battleButton.setOnClickListener {
             battleButton.visibility = View.GONE
             val dice1 = Random.nextInt(1, 6)
@@ -95,6 +96,7 @@ class MainActivity : ComponentActivity() {
             }, 1500) // 1.5 segundos de atraso para mostrar os dados antes da batalha continuar
         }
 
+        //Evento ao clicar no botão de poção
         potionButton.setOnClickListener{
            if(player.potions.size > 0){
                playerController.usePotion(player.potions[0])
@@ -106,6 +108,7 @@ class MainActivity : ComponentActivity() {
            }
         }
 
+        //Evento ao clicar no botão de salvar
         saveButton.setOnClickListener{
             try{
                 dbHelper.savePlayer(player)
@@ -115,18 +118,21 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        //Evento ao clicar no botão de sait
         quitButton.setOnClickListener{
             val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
         }
     }
 
+    //Sorteia um novo monstro e ajusta os status do mesmo para o nivel atual do jogador
     fun drawMonster(monsterList: List<Monster>, player: Player): Monster{
         val monster: Monster = monsterList.random()
         monster.adjustStatus(player)
         return monster
     }
 
+    //atualiza as informações do jogador na UI
     @SuppressLint("SetTextI18n")
     fun updatePlayerData(player: Player){
         val sideBar: TextView = binding.sideBar
@@ -140,6 +146,7 @@ class MainActivity : ComponentActivity() {
         playerHp.text = player.hp.toString()
     }
 
+    //atualiza as informações do monstro na UI
     @SuppressLint("SetTextI18n")
     fun updateEnemyData(monster: Monster){
         val monsterName = binding.monsterName

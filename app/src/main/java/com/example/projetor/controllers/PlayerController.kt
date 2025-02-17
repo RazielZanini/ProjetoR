@@ -8,6 +8,7 @@ import com.example.projetor.models.Player
 
 class PlayerController(private val context: Context, private val player: Player) {
 
+    //Função de atacar inimigo
     fun attackEnemy(enemy: Monster, dice1: Int, dice2: Int){
         val totalAtk = player.atk + dice1 + dice2
 
@@ -22,6 +23,7 @@ class PlayerController(private val context: Context, private val player: Player)
         }
     }
 
+    //função que atribui o XP para o jogador
     fun earnBattleXp(monster: Monster){
         val gainedXp = monster.lvl * 3
 
@@ -30,6 +32,7 @@ class PlayerController(private val context: Context, private val player: Player)
         Toast.makeText(context, "Jogador recebeu $gainedXp de experiência", Toast.LENGTH_SHORT).show()
     }
 
+    //função para beber poção
     fun usePotion(potion: Item){
 
         if(player.hp == 50){

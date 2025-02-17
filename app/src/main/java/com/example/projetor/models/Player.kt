@@ -14,6 +14,7 @@ class Player(val name: String, imgId: Int){
 
     //gap de xp gerados automaticamente
     val xpGap = generateSequence(0) { it + 5 }.take(10).toList()
+    val hpGap = generateSequence(50) { it + 5 }.take(10).toList()
 
     fun gainXp(earnedXp: Int) {
         xp += earnedXp
@@ -28,7 +29,7 @@ class Player(val name: String, imgId: Int){
         xp = excess // reseta o xp e deixa o restante da progressão
         lvl++
         atk+=2
-        hp += 5
+        hp = hpGap[lvl]
     }
 
     fun takeDamage(damage: Int) {
@@ -41,8 +42,8 @@ class Player(val name: String, imgId: Int){
     }
 
     fun usePotion(potion: Item){
-        if(hp + potion.lifeRegen > 50){
-            hp = 50
+        if(hp + potion.lifeRegen > hpGap[lvl]){
+            hp = hpGap[lvl]
             potions.remove(potion)
         } else{
             hp += potion.lifeRegen

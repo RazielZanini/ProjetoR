@@ -86,6 +86,11 @@ class MainActivity : ComponentActivity() {
                     monster = drawMonster(monsters, player)
                 }
 
+                if(player.hp <= 0){
+                    val intent = Intent(this, GameOverActivity::class.java)
+                    intent.putExtra("playerName", player.name)
+                }
+
                 updatePlayerData(player)
                 updateEnemyData(monster)
 

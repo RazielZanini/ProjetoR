@@ -1,6 +1,7 @@
 package com.example.projetor
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -13,12 +14,16 @@ import com.example.projetor.models.Player
 import kotlin.random.Random
 import android.os.Handler
 import android.os.Looper
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.Toast
+import com.example.projetor.database.DatabaseHelper
 
 
 class MainActivity : ComponentActivity() {
-    lateinit var binding: ActivityMainBinding
-    lateinit var playerController: PlayerController
-    val monsters = listOfNotNull(
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var playerController: PlayerController
+    private val monsters = listOfNotNull(
         Monster("Weird Dwarf",R.drawable.monster1),
         Monster("Big Eye", R.drawable.monster2),
         Monster("Weird Snake", R.drawable.monster3),
@@ -35,15 +40,26 @@ class MainActivity : ComponentActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val playerName = intent.getStringExtra("playerName") ?: "Jogador"
-        val player = Player(playerName, R.drawable.player_img)
+        val dbHelper = DatabaseHelper(this)
+        val loadGame = intent.getBooleanExtra("LOAD_GAME", false)
+
+        //verifica qual a intent recebida
+        val player: Player = if (loadGame) {
+            dbHelper.loadPLayer() ?: Player("Jogador", R.drawable.player_img)
+        } else {
+            Player(intent.getStringExtra("playerName") ?: "Jogador", R.drawable.player_img)
+        }
+
         playerController = PlayerController(this, player)
 
-        var monster = drawMonster(monsters)
-        val battleButton = binding.battleButton
-        val diceArea = binding.diceArea
-        val potionButton = binding.potionButton
-        val potionCount = binding.potionBadge
+        var monster: Monster = drawMonster(monsters, player)
+        val battleButton: ImageButton = binding.battleButton
+        val diceArea: TextView = binding.diceArea
+        val potionButton: ImageButton = binding.potionButton
+        val potionCount: TextView = binding.potionBadge
+        val saveButton: Button = binding.save
+        val quitButton: Button = binding.quit
+
         diceArea.visibility = View.INVISIBLE
         potionCount.text = "${player.potions.size}"
 
@@ -66,8 +82,7 @@ class MainActivity : ComponentActivity() {
 
                 if (monster.hp <= 0) {
                     playerController.earnBattleXp(monster)
-                    monster = drawMonster(monsters)
-                    monster.adjustStatus(player)
+                    monster = drawMonster(monsters, player)
                 }
 
                 updatePlayerData(player)
@@ -81,15 +96,35 @@ class MainActivity : ComponentActivity() {
         }
 
         potionButton.setOnClickListener{
-            playerController.usePotion(player.potions[0])
-            potionCount.text = "${player.potions.size}"
-            val playerHp = binding.playerHp
-            playerHp.text = "${player.hp}"
+           if(player.potions.size > 0){
+               playerController.usePotion(player.potions[0])
+               potionCount.text = "${player.potions.size}"
+               val playerHp = binding.playerHp
+               playerHp.text = "${player.hp}"
+           } else{
+               Toast.makeText(this, "Você não possui mais poções", Toast.LENGTH_SHORT).show()
+           }
+        }
+
+        saveButton.setOnClickListener{
+            try{
+                dbHelper.savePlayer(player)
+                Toast.makeText(this, "Jogo salvo com sucesso!", Toast.LENGTH_SHORT).show()
+            } catch(e: Exception){
+                Toast.makeText(this, "Erro ao salvar progresso!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        quitButton.setOnClickListener{
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
         }
     }
 
-    fun drawMonster(monsterList: List<Monster>): Monster{
-        return monsterList.random()
+    fun drawMonster(monsterList: List<Monster>, player: Player): Monster{
+        val monster: Monster = monsterList.random()
+        monster.adjustStatus(player)
+        return monster
     }
 
     @SuppressLint("SetTextI18n")
@@ -97,7 +132,6 @@ class MainActivity : ComponentActivity() {
         val sideBar: TextView = binding.sideBar
         val playerHp: TextView = binding.playerHp
         val playerXp: TextView = binding.xpBar
-        val maxHp = player.hp
         sideBar.text = " ${player.name}\n " +
                 "Level: ${player.lvl}\n " +
                 "Atk: ${player.atk} \n " +
@@ -112,10 +146,11 @@ class MainActivity : ComponentActivity() {
         val monsterImage = binding.monster
         val monsterLvl = binding.monsterLvl
         val monsterHp = binding.monsterHp
-        val monsterMaxHP = monster.hp
+        val monsterAtk = binding.monsterAtk
         monsterImage.setImageResource(monster.imageResId)
         monsterName.text = monster.name
         monsterHp.text = monster.hp.toString()
         monsterLvl.text = "Lvl: ${monster.lvl}"
+        monsterAtk.text = "Atk: ${monster.atk}"
     }
 }

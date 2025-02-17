@@ -8,6 +8,31 @@
     tools:context=".MainActivity"
     >
 
+    <Button
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/save"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Salvar"
+        android:background="@drawable/rounded"
+        />
+
+    <Button
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/quit"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Sair"
+        android:background="@drawable/rounded"
+        android:backgroundTint="#FF6347"
+        />
+
     <TextView
         android:layout_width="100dp"
         android:layout_height="20dp"
@@ -15,6 +40,20 @@
         app:layout_constraintBottom_toTopOf="@id/monster_hp"
         app:layout_constraintStart_toStartOf="@id/monster_hp"
         android:text="Monster Name"
+        android:textColor="@color/white"
+        android:shadowColor="@color/black"
+        android:shadowDy="1"
+        android:shadowDx="1"
+        android:shadowRadius="1"
+        />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:id="@+id/monster_atk"
+        app:layout_constraintBottom_toTopOf="@id/monster_hp"
+        app:layout_constraintStart_toEndOf="@+id/monster_name"
+        android:text="Atk: "
         android:textColor="@color/white"
         android:shadowColor="@color/black"
         android:shadowDy="1"

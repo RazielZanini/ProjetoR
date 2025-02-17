@@ -2,15 +2,11 @@ package com.example.projetor.models
 
 class Player(val name: String, imgId: Int){
     var hp: Int = 50
-        private set
     var xp: Int = 0
-        private set
     var atk: Int = 10
-        private set
     var lvl: Int = 1
-        private set
     var gold: Int = 0
-        private set
+    //O jogador começa com duas poções na bolsa
     val potions = mutableListOf<Item>(
         Item("Poção de vida", 10),
         Item("Poção de vida", 10)
@@ -32,6 +28,7 @@ class Player(val name: String, imgId: Int){
         xp = excess // reseta o xp e deixa o restante da progressão
         lvl++
         atk+=2
+        hp += 5
     }
 
     fun takeDamage(damage: Int) {

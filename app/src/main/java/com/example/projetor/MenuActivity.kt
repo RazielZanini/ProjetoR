@@ -5,10 +5,12 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projetor.databinding.ActivityMenuBinding
 import androidx.compose.material3.AlertDialog
+import com.example.projetor.database.DatabaseHelper
 
 class MenuActivity : AppCompatActivity() {
 
@@ -30,9 +32,26 @@ class MenuActivity : AppCompatActivity() {
        }
 
         val newGameButton: Button = binding.newGame
+        val loadGameButton: Button = binding.loadGame
+        val quitButton: Button = binding.quitApp
+
+        if(isDatabaseEmpty()){
+            loadGameButton.isEnabled = false
+        } else {
+            loadGameButton.setOnClickListener{
+                Toast.makeText(this, "Botão clicado",Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("LOAD_GAME", true)
+                startActivity(intent)
+            }
+        }
 
         newGameButton.setOnClickListener{
             showNameInputDialog()
+        }
+
+        quitButton.setOnClickListener{
+            finishAffinity()
         }
 
     }
@@ -58,6 +77,21 @@ class MenuActivity : AppCompatActivity() {
             }
 
         dialogBuilder.create().show()
+    }
+
+    private fun isDatabaseEmpty(): Boolean {
+        val dbHelper = DatabaseHelper(this)
+        val db = dbHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT COUNT(*) FROM player", null)
+
+        var isEmpty = true
+        if(cursor.moveToFirst()){
+            isEmpty = cursor.getInt(0) == 0
+        }
+
+        cursor.close()
+        db.close()
+        return isEmpty
     }
 
     override fun onDestroy() {

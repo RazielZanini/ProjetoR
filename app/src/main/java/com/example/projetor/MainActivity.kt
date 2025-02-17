@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
 
             // Exibe os dados e aguarda 1.5 segundos antes de continuar
             diceArea.visibility = View.VISIBLE
-            diceArea.text = "Dado 1: $dice1 \nDado 2: $dice2"
+            diceArea.text = "\uD83C\uDFB2: $dice1 \n\uD83C\uDFB2: $dice2"
 
             Handler(Looper.getMainLooper()).postDelayed({
                 diceArea.visibility = View.GONE
@@ -145,8 +145,8 @@ class MainActivity : ComponentActivity() {
         val playerXp: TextView = binding.xpBar
         sideBar.text = " ${player.name}\n " +
                 "Level: ${player.lvl}\n " +
-                "Atk: ${player.atk} \n " +
-                "Gold: ${player.gold}"
+                "⚔\uFE0F: ${player.atk} \n " +
+                " \uD83D\uDCB0: ${player.gold}"
         playerXp.text = "${player.xp}/ 15"
         playerHp.text = player.hp.toString()
     }

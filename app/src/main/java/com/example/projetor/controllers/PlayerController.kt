@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.example.projetor.models.Item
 import com.example.projetor.models.Monster
 import com.example.projetor.models.Player
+import kotlin.random.Random
 
 class PlayerController(private val context: Context, private val player: Player) {
 
@@ -16,8 +17,8 @@ class PlayerController(private val context: Context, private val player: Player)
             enemy.takeDamage(totalAtk)
             Toast.makeText(context, "Inimigo sofreu $totalAtk de dano", Toast.LENGTH_SHORT).show()
         } else if(totalAtk < enemy.atk){
-            player.takeDamage(enemy.atk - totalAtk)
-            Toast.makeText(context, "Jogador sofreu ${enemy.atk - totalAtk} de dano", Toast.LENGTH_SHORT).show()
+            player.takeDamage(enemy.atk - player.atk)
+            Toast.makeText(context, "Jogador sofreu ${enemy.atk - player.atk} de dano", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(context, "Empate",Toast.LENGTH_SHORT).show()
         }
@@ -28,8 +29,14 @@ class PlayerController(private val context: Context, private val player: Player)
         val gainedXp = monster.lvl * 3
 
         player.gainXp(gainedXp)
+        receiveGold()
 
         Toast.makeText(context, "Jogador recebeu $gainedXp de experiência", Toast.LENGTH_SHORT).show()
+    }
+
+    fun receiveGold(){
+        val goldEarned = Random.nextInt(1,20)
+        player.gainGold(goldEarned)
     }
 
     //função para beber poção

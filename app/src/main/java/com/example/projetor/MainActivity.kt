@@ -89,6 +89,7 @@ class MainActivity : ComponentActivity() {
                 if(player.hp <= 0){
                     val intent = Intent(this, GameOverActivity::class.java)
                     intent.putExtra("playerName", player.name)
+                    startActivity(intent)
                 }
 
                 updatePlayerData(player)
